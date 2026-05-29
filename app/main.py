@@ -8,6 +8,9 @@ from app.api.routes.webhooks import router as webhook_router
 from app.models.client import Client
 from app.models.webhook_event import WebhookEvent
 
+# Arquivo principal da aplicação: inicializa o FastAPI, 
+# cria as tabelas do banco de dados e registra todas as rotas disponíveis da API.
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(

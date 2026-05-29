@@ -24,3 +24,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# Configuração da conexão com o banco de dados SQLite, 
+# criação das sessões utilizadas pela aplicação e gerenciamento automático das conexões.

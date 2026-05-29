@@ -38,3 +38,4 @@ db: Session = Depends(get_db)
     "cliente_id": new_client.id
 }
 
+# Endpoint responsável por cadastrar um novo cliente no banco de dados e retornar uma mensagem de sucesso junto com o ID do cliente criado.

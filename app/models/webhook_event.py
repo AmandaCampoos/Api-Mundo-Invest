@@ -14,3 +14,6 @@ class WebhookEvent(Base):
     card_id = Column(String, nullable=False, index=True)  
 
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    # Model responsável por registrar os eventos recebidos via webhook,
+    # permitindo o controle de duplicidade e o rastreamento do processamento realizado pela API.

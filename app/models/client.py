@@ -3,11 +3,11 @@ from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Float
 from sqlalchemy import DateTime
-
 from datetime import datetime
-
 from app.core.database import Base
 
+# Model responsável pela estrutura da tabela de clientes no banco de dados,
+#  incluindo dados cadastrais, status da análise e definição de prioridade.
 class Client(Base):
 
     __tablename__ = "clients"

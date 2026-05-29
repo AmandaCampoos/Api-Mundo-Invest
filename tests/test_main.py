@@ -1,9 +1,14 @@
+# Classe responsável por simular requisições HTTP nos testes da API
 from fastapi.testclient import TestClient
+
+# Importa a aplicação principal do FastAPI
 from app.main import app
 
+# Cria cliente de testes para executar chamadas nos endpoints
 client = TestClient(app)
 
 
+# Função auxiliar para criar um cliente padrão usado nos testes
 def criar_cliente():
 
     client.post(
@@ -17,6 +22,7 @@ def criar_cliente():
     )
 
 
+# Testa se o endpoint de criação de cliente retorna sucesso
 def test_create_client():
 
     response = client.post(
@@ -29,13 +35,16 @@ def test_create_client():
         }
     )
 
+    # Verifica se a API respondeu corretamente
     assert response.status_code == 200
 
     data = response.json()
 
+    # Valida mensagem de sucesso
     assert data["message"] == "Cliente criado com sucesso"
 
 
+# Testa se o webhook define prioridade alta para clientes com alto patrimônio
 def test_webhook_prioridade_alta():
 
     criar_cliente()
@@ -50,17 +59,21 @@ def test_webhook_prioridade_alta():
         }
     )
 
+    # Verifica resposta de sucesso do webhook
     assert response.status_code == 200
 
     data = response.json()
 
+    # Confirma aplicação da regra de prioridade alta
     assert data["prioridade"] == "prioridade_alta"
 
 
+# Testa bloqueio de eventos duplicados
 def test_webhook_duplicado():
 
     criar_cliente()
 
+    # Primeiro processamento do evento
     client.post(
         "/webhooks/pipefy/card-updated",
         json={
@@ -71,6 +84,7 @@ def test_webhook_duplicado():
         }
     )
 
+    # Segunda tentativa com mesmo event_id
     response = client.post(
         "/webhooks/pipefy/card-updated",
         json={
@@ -81,8 +95,10 @@ def test_webhook_duplicado():
         }
     )
 
+    # Verifica se o sistema bloqueou duplicidade
     assert response.status_code == 400
 
     data = response.json()
 
+    # Confirma mensagem de erro esperada
     assert data["detail"] == "Evento já processado"
