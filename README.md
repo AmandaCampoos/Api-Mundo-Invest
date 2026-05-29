@@ -58,7 +58,7 @@ backend/
 ## 1. Clonar repositório
 
 ```bash
-git clone <url-do-repositorio>
+git clone  https://github.com/AmandaCampoos/Api-Mundo-Invest.git
 ```
 
 ---
@@ -108,6 +108,8 @@ Swagger:
 ```txt
 http://127.0.0.1:8000/docs
 ```
+ ![Iniciando..](image-1.png)
+
 
 ---
 
@@ -116,6 +118,7 @@ http://127.0.0.1:8000/docs
 ```bash
 pytest -v
 ```
+ ![Teste](image.png)
 
 Resultado esperado:
 
