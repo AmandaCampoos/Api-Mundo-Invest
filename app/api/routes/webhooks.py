@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
-from app.database import get_db
+from app.core.database import get_db
 from app.models.webhook_event import WebhookEvent
 from app.models.client import Client
 from app.schemas.webhook import WebhookPayload
@@ -23,7 +22,7 @@ def receive_webhook(
     if evento_existente:
         raise HTTPException(
             status_code=400,
-            detail="Webhook já processado"
+            detail="Evento já processado"
         )
 
     # salva evento
@@ -36,11 +35,11 @@ def receive_webhook(
 
     # procura cliente
     cliente = db.query(Client).filter(
-        Client.cliente_email == payload.cliente_email
+    Client.cliente_email == payload.cliente_email
     ).first()
 
     if not cliente:
-        return {"error": "Cliente não encontrado"}
+        raise HTTPException(status_code=404, detail="Cliente não encontrado")
 
     # regra de prioridade
     if cliente.valor_patrimonio >= 100000:
